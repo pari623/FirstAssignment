@@ -26,7 +26,7 @@ public class JQueryFirstAssignmentTest {
         Actions actions=new Actions(driver);
         Point beforeDrag=source.getLocation();
         int beforeMoved=beforeDrag.getX();
-        actions.dragAndDropBy(source,120,60).perform();
+        actions.dragAndDropBy(source,120,70).perform();
         Thread.sleep(2000);
         Point afterDrag= source.getLocation();
         int afterMoved= afterDrag.getX();
