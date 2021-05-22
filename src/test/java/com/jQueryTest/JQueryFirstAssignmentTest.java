@@ -170,7 +170,10 @@ public class JQueryFirstAssignmentTest {
         WebElement autocompletePage=driver.findElement(By.cssSelector("iframe[class='demo-frame']"));
         driver.switchTo().frame(autocompletePage);
         WebElement tagsField=driver.findElement(By.id("tags"));
-        tagsField.sendKeys("Java");
+        tagsField.sendKeys("J");
+        sleep(2);
+        WebElement selectedObj=driver.findElement(By.xpath("//ul/li/div[text()=\"Java\"]"));
+        selectedObj.click();
         //WebElement selectedObj=driver.findElement(By.xpath("//div[@tabindex='-1'][@class='ui-menu-item-wrapper'][text()='Java']"));
         //selectedObj.click();
         // WebElement selectObj= driver.findElement(By.xpath("//div[text()='Java']//parent::li[@class='ui-menu-item']//preceding-sibling::li[@class='ui-menu-item']"));
@@ -193,7 +196,6 @@ public class JQueryFirstAssignmentTest {
         sleep(1);
         WebElement button=driver.findElement(By.cssSelector("button[class='ui-button ui-corner-all ui-widget']"));
         button.click();
-        sleep(1);
 
 
         // 9.Test for CheckBox Radio
@@ -233,8 +235,168 @@ public class JQueryFirstAssignmentTest {
         sleep(1);
         driver.findElement(By.xpath("//button[contains(text(),'Book Now!')]")).click();
 
+
+        // 11.Test for Date picker
+
+        driver.get("https://jqueryui.com/");
+        sleep(1);
+        driver.findElement(By.linkText("Datepicker")).click();
+        jse.executeScript("window.scrollBy(0,300)");
+        WebElement datePickerPage=driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
+        driver.switchTo().frame(datePickerPage);
+        WebElement datePickerBox=driver.findElement(By.id("datepicker"));
+        datePickerBox.click();
+        driver.findElement(By.xpath("//a[normalize-space()='23']")).click();
+        sleep(2);
+        if (datePickerBox.isDisplayed())
+            System.out.println("Date selected and Test passed");
+        else
+            System.out.println("Test failed");
+
+
+
+        // 12. Test for Dialog
+
+        driver.get("https://jqueryui.com/");
+        sleep(1);
+        driver.findElement(By.linkText("Dialog")).click();
+        jse.executeScript("window.scrollBy(0,300)");
+        WebElement dialogPage=driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
+        driver.switchTo().frame(dialogPage);
+        WebElement dialogBox=driver.findElement(By.xpath("//span[text()='Basic dialog']"));
+        Actions moveDialogBox=new Actions(driver);
+        moveDialogBox.moveToElement(dialogBox,60,100);
+        driver.findElement(By.xpath("//span[@class='ui-button-icon ui-icon ui-icon-closethick']")).click();
+        sleep(2);
+
+
+        // 13.Test for Menu
+
+        driver.get("https://jqueryui.com/");
+        sleep(1);
+        driver.findElement(By.linkText("Menu")).click();
+        jse.executeScript("window.scrollBy(0,300)");
+        WebElement menuPage=driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
+        driver.switchTo().frame(menuPage);
+        WebElement musicMenu=driver.findElement(By.xpath("//div[(text()='Music')]"));
+        Actions menuActions=new Actions(driver);
+        menuActions.moveToElement(musicMenu).build().perform();
+        sleep(1);
+        WebElement jazz=driver.findElement(By.xpath("//div[(text()='Jazz')]"));
+        menuActions.moveToElement(jazz).build().perform();
+        sleep(1);
+        driver.findElement(By.xpath("//div[(text()='Modern')]")).click();
+
+
+
+        // 14.Test for Select Menu
+
+        driver.get("https://jqueryui.com/");
+        sleep(1);
+        driver.findElement(By.linkText("Selectmenu")).click();
+        sleep(1);
+        jse.executeScript("window.scrollBy(0,300)");
+        WebElement selectMenuPage=driver.findElement(By.cssSelector("iframe[class='demo-frame']"));
+        driver.switchTo().frame(selectMenuPage);
+        driver.findElement(By.xpath("//span[@id='speed-button']" +
+                "//span[@class='ui-selectmenu-icon ui-icon ui-icon-triangle-1-s']")).click();
+        sleep(1);
+        driver.findElement(By.xpath("//div/ul/li/div[text()='Fast']")).click();
+        driver.findElement(By.xpath("//span[@id='files-button']" +
+                "//span[@class='ui-selectmenu-icon ui-icon ui-icon-triangle-1-s']")).click();
+        sleep(1);
+        WebElement fileBox=driver.findElement(By.xpath("//div[text()='ui.jQuery.js']"));
+        fileBox.click();
+        sleep(2);
+        if(fileBox.isEnabled())
+            System.out.println("Boxes were selected and Test Passed");
+        else
+            System.out.println("Test Failed");
+
+
+        // 15.Test for Slider
+
+        driver.get("https://jqueryui.com/");
+        sleep(1);
+        driver.findElement(By.linkText("Slider")).click();
+        jse.executeScript("window.scrollBy(0,300)");
+        WebElement sliderPage=driver.findElement(By.cssSelector("iframe[class='demo-frame']"));
+        driver.switchTo().frame(sliderPage);
+        WebElement slideObj=driver.findElement(By.xpath("//span[@class='ui-slider-handle ui-corner-all ui-state-default']"));
+        Actions slide=new Actions(driver);
+        slide.dragAndDropBy(slideObj,250,300).perform();
+        sleep(2);
+
+
+        // 16.Test for Spinner
+
+        driver.get("https://jqueryui.com/");
+        sleep(1);
+        driver.findElement(By.linkText("Spinner")).click();
+        jse.executeScript("window.scrollBy(0,300)");
+        WebElement spinnerPage=driver.findElement(By.cssSelector("iframe[class='demo-frame']"));
+        driver.switchTo().frame(spinnerPage);
+        sleep(1);
+        WebElement upArrow=driver.findElement(By.cssSelector("span[class='ui-button-icon ui-icon ui-icon-triangle-1-n']"));
+        Actions clickArrow=new Actions(driver);
+        clickArrow.doubleClick(upArrow).perform();
+        sleep(1);
+        WebElement toggleButton=driver.findElement(By.xpath("//button[text()='Toggle widget']"));
+        toggleButton.click();
+        sleep(1);
+        if(toggleButton.isEnabled())
+            System.out.println("Test Passed");
+        else
+            System.out.println("Test Failed");
+
+
+
+        driver.findElement(By.id("getvalue")).click();
+        sleep(1);
+
+        // 17.Test for Tabs
+
+        driver.get("https://jqueryui.com/");
+        sleep(1);
+        driver.findElement(By.linkText("Tabs")).click();
+        jse.executeScript("window.scrollBy(0,300)");
+        WebElement tabsPage=driver.findElement(By.cssSelector("iframe[class='demo-frame']"));
+        driver.switchTo().frame(tabsPage);
+        sleep(1);
+        WebElement content=driver.findElement(By.xpath("//a[text()='Proin dolor']"));
+        content.click();
+        sleep(1);
+        if(content.isDisplayed())
+            System.out.println("Content displayed and Test Passed");
+        else
+            System.out.println("Test Failed");
+
+
+        // 18.Test for Tooltip
+
+        driver.get("https://jqueryui.com/");
+        sleep(1);
+        driver.findElement(By.linkText("Tooltip")).click();
+        jse.executeScript("window.scrollBy(0,300)");
+        WebElement tooltipPage=driver.findElement(By.cssSelector("iframe[class='demo-frame']"));
+        driver.switchTo().frame(tooltipPage);
+        WebElement ageTextBox=driver.findElement(By.id("age"));
+        ageTextBox.click();
+        sleep(2);
+        if(ageTextBox.isDisplayed())
+            System.out.println("Test Passed");
+        else
+            System.out.println("Test Failed");
+
         driver.close();
         driver.quit();
+
+
+
+
+
+
+
 
 
 
