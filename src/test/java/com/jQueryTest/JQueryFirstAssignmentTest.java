@@ -12,16 +12,24 @@ public class JQueryFirstAssignmentTest {
     public static void main(String[] args)  {
 
         //1.Test for Draggable
+        //initialize the browser
         WebDriver driver;
-        System.setProperty("webdriver.chrome.driver", "/Users/guzhanuerxilili/Downloads/FirstAssignment/drivers/chromedriver");
+        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "//drivers//chromedriver");
         driver = new ChromeDriver();
         driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Draggable")).click();
+        //Drag the object
+        WebElement draggableLink=driver.findElement(By.linkText("Draggable"));
         JavascriptExecutor jse = (JavascriptExecutor) driver;
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                draggableLink);
+        draggableLink.click();
+        sleep(1);
         jse.executeScript("window.scrollBy(0,300)");
         WebElement draggablePage=driver.findElement(By.cssSelector(" iframe[class='demo-frame']"));
         driver.switchTo().frame(draggablePage);
@@ -31,6 +39,7 @@ public class JQueryFirstAssignmentTest {
         int beforeMoved=beforeDrag.getX();
         actions.dragAndDropBy(source,120,70).perform();
         sleep(2);
+        //verify the element dragged
         Point afterDrag= source.getLocation();
         int afterMoved= afterDrag.getX();
         if(afterMoved>beforeMoved)
@@ -41,10 +50,17 @@ public class JQueryFirstAssignmentTest {
 
 
         // 2.Test for droppable
-
+          //initialize the browser
         driver.get("https://jqueryui.com/");
          sleep(1);
-        driver.findElement(By.linkText("Droppable")).click();
+         //Drop the object from current place
+        WebElement droppableLink=driver.findElement(By.linkText("Droppable"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                droppableLink);
+        droppableLink.click();
+        sleep(1);
         jse.executeScript("window.scrollBy(0,300)");
         WebElement droppablePage=driver.findElement(By.cssSelector(" iframe[class='demo-frame']"));
         driver.switchTo().frame(droppablePage);
@@ -53,6 +69,7 @@ public class JQueryFirstAssignmentTest {
         WebElement droppable= driver.findElement(By.id("droppable"));
         actions.dragAndDrop(draggable,droppable).perform();
         sleep(2);
+        //verification
         WebElement confirmationMessage=driver.findElement(By.xpath(" //p[normalize-space()='Dropped!']"));
         if(confirmationMessage.isDisplayed())
             System.out.println("Test passed and object dropped to the target area");
@@ -62,10 +79,16 @@ public class JQueryFirstAssignmentTest {
 
 
         // 3.Test for Resizable
-
+         //initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Resizable")).click();
+        //Resize the onject
+        WebElement resizableLink=driver.findElement(By.linkText("Resizable"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+               resizableLink);
+        resizableLink.click();
         jse.executeScript("window.scrollBy(0,300)");
          sleep(1);
         WebElement resizablePage=driver.findElement(By.cssSelector(" iframe[class='demo-frame']"));
@@ -78,6 +101,7 @@ public class JQueryFirstAssignmentTest {
         Actions resizeAction=new Actions(driver);
         resizeAction.clickAndHold(resizeArrow).moveByOffset(90,60).release().perform();
         sleep(2);
+        //Verification
         Point afterResize=resizeArrow.getLocation();
         int afterResized=afterResize.getX();
         System.out.println("The size after changed is: "+afterResize.getX());
@@ -88,16 +112,23 @@ public class JQueryFirstAssignmentTest {
 
 
         // 4.Test for single selectable
-
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Selectable")).click();
+        //Select for single object
+        WebElement selectableLink=driver.findElement(By.linkText("Selectable"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                selectableLink);
+        selectableLink.click();
         jse.executeScript("window.scrollBy(0,300)");
         WebElement selectablePage=driver.findElement(By.cssSelector(" iframe[class='demo-frame']"));
         driver.switchTo().frame(selectablePage);
         WebElement selectedItem=driver.findElement(By.xpath("//li[normalize-space()='Item 3']"));
         selectedItem.click();
         sleep(2);
+        //verification
         if(selectedItem.isDisplayed())
             System.out.println("The item selected and test passed");
         else
@@ -107,10 +138,16 @@ public class JQueryFirstAssignmentTest {
 
         // 5.Test for select multiple items
 
-
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Selectable")).click();
+        //Select multiple objects
+        WebElement selectableLink2=driver.findElement(By.linkText("Selectable"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+               selectableLink2);
+        selectableLink2.click();
         jse.executeScript("window.scrollBy(0,300)");
         WebElement selectablePage2=driver.findElement(By.cssSelector(" iframe[class='demo-frame']"));
         driver.switchTo().frame(selectablePage2);
@@ -118,6 +155,7 @@ public class JQueryFirstAssignmentTest {
         WebElement dropTo= driver.findElement(By.xpath("//li[contains(text(),'Item 5')]"));
         Actions action=new Actions(driver);
         action.dragAndDrop(dragFrom,dropTo).release().build().perform();
+        //Verification
         sleep(2);
         if(dragFrom.isEnabled())
             System.out.println("Test passed");
@@ -125,10 +163,16 @@ public class JQueryFirstAssignmentTest {
             System.out.println("Test failed");
 
         // 5.Test for sortable
-
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Sortable")).click();
+        //Sorting item on the list
+        WebElement sortableLink=driver.findElement(By.linkText("Sortable"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                sortableLink);
+        sortableLink.click();
         jse.executeScript("window.scrollBy(0,300)");
         WebElement sortablePage=driver.findElement(By.cssSelector("iframe[class='demo-frame']"));
         driver.switchTo().frame(sortablePage);
@@ -142,10 +186,16 @@ public class JQueryFirstAssignmentTest {
 
 
         // 6.Test for accordion
-
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Accordion")).click();
+        //Expand collapsed content
+        WebElement accordionLink=driver.findElement(By.linkText("Accordion"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+               accordionLink);
+        accordionLink.click();
         jse.executeScript("window.scrollBy(0,300)");
         WebElement accordionPage=driver.findElement(By.cssSelector("iframe[class='demo-frame']"));
         driver.switchTo().frame(accordionPage);
@@ -153,6 +203,7 @@ public class JQueryFirstAssignmentTest {
         WebElement expandWindow=driver.findElement(By.cssSelector("h3[id='ui-id-5']"));
         expandWindow.click();
         sleep(2);
+        //Verification
         if(expandWindow.isDisplayed())
             System.out.println("Window expanded and Test Passed");
         else
@@ -161,10 +212,16 @@ public class JQueryFirstAssignmentTest {
 
         // 7.Test for Autocomplete
 
-
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Autocomplete")).click();
+        //Select provided suggestion
+        WebElement autoComplete=driver.findElement(By.linkText("Autocomplete"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                autoComplete);
+        autoComplete.click();
         sleep(1);
         jse.executeScript("window.scrollBy(0,300)");
         WebElement autocompletePage=driver.findElement(By.cssSelector("iframe[class='demo-frame']"));
@@ -174,11 +231,8 @@ public class JQueryFirstAssignmentTest {
         sleep(2);
         WebElement selectedObj=driver.findElement(By.xpath("//ul/li/div[text()=\"Java\"]"));
         selectedObj.click();
-        //WebElement selectedObj=driver.findElement(By.xpath("//div[@tabindex='-1'][@class='ui-menu-item-wrapper'][text()='Java']"));
-        //selectedObj.click();
-        // WebElement selectObj= driver.findElement(By.xpath("//div[text()='Java']//parent::li[@class='ui-menu-item']//preceding-sibling::li[@class='ui-menu-item']"));
-        // selectObj.click();
         sleep(1);
+        //Verification
         if(tagsField.isEnabled())
             System.out.println("Test Passed");
         else
@@ -187,9 +241,16 @@ public class JQueryFirstAssignmentTest {
 
         // 8.Test for Button
 
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Button")).click();
+        //Clickable buttons
+        WebElement buttonLink=driver.findElement(By.linkText("Button"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                buttonLink);
+        buttonLink.click();
         jse.executeScript("window.scrollBy(0,300)");
         WebElement buttonsPage=driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
         driver.switchTo().frame(buttonsPage);
@@ -200,9 +261,16 @@ public class JQueryFirstAssignmentTest {
 
         // 9.Test for CheckBox Radio
 
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Checkboxradio")).click();
+        //Select item by clicking checkbox radio
+        WebElement checkBoxRadio=driver.findElement(By.linkText("Checkboxradio"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                checkBoxRadio);
+        checkBoxRadio.click();
         jse.executeScript("window.scrollBy(0,300)");
         WebElement checkBoxPage=driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
         driver.switchTo().frame(checkBoxPage);
@@ -216,9 +284,17 @@ public class JQueryFirstAssignmentTest {
 
 
         // 10.Test for Control Group
+
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Controlgroup")).click();
+        //Select various criteria about a topic
+        WebElement controlGroupLink=driver.findElement(By.linkText("Controlgroup"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                controlGroupLink);
+        controlGroupLink.click();
         jse.executeScript("window.scrollBy(0,300)");
         WebElement ControlGroupPage=driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
         driver.switchTo().frame(ControlGroupPage);
@@ -238,9 +314,16 @@ public class JQueryFirstAssignmentTest {
 
         // 11.Test for Date picker
 
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Datepicker")).click();
+        //Selecting date by date picker
+        WebElement datepickerLink=driver.findElement(By.linkText("Datepicker"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                datepickerLink);
+        datepickerLink.click();
         jse.executeScript("window.scrollBy(0,300)");
         WebElement datePickerPage=driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
         driver.switchTo().frame(datePickerPage);
@@ -248,6 +331,7 @@ public class JQueryFirstAssignmentTest {
         datePickerBox.click();
         driver.findElement(By.xpath("//a[normalize-space()='23']")).click();
         sleep(2);
+        //Verification
         if (datePickerBox.isDisplayed())
             System.out.println("Date selected and Test passed");
         else
@@ -257,9 +341,16 @@ public class JQueryFirstAssignmentTest {
 
         // 12. Test for Dialog
 
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Dialog")).click();
+        //move and close to dialog box
+        WebElement dialogLink=driver.findElement(By.linkText("Dialog"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                dialogLink);
+        dialogLink.click();
         jse.executeScript("window.scrollBy(0,300)");
         WebElement dialogPage=driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
         driver.switchTo().frame(dialogPage);
@@ -272,9 +363,17 @@ public class JQueryFirstAssignmentTest {
 
         // 13.Test for Menu
 
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Menu")).click();
+        //Select desired menu
+        WebElement menuLink=driver.findElement(By.linkText("Menu"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                menuLink);
+        menuLink.click();
+        sleep(1);
         jse.executeScript("window.scrollBy(0,300)");
         WebElement menuPage=driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
         driver.switchTo().frame(menuPage);
@@ -291,9 +390,16 @@ public class JQueryFirstAssignmentTest {
 
         // 14.Test for Select Menu
 
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Selectmenu")).click();
+        //Select item on dropdown list
+        WebElement selectMenuLink=driver.findElement(By.linkText("Selectmenu"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                selectMenuLink);
+        selectMenuLink.click();
         sleep(1);
         jse.executeScript("window.scrollBy(0,300)");
         WebElement selectMenuPage=driver.findElement(By.cssSelector("iframe[class='demo-frame']"));
@@ -308,6 +414,7 @@ public class JQueryFirstAssignmentTest {
         WebElement fileBox=driver.findElement(By.xpath("//div[text()='ui.jQuery.js']"));
         fileBox.click();
         sleep(2);
+        //Verification
         if(fileBox.isEnabled())
             System.out.println("Boxes were selected and Test Passed");
         else
@@ -316,9 +423,17 @@ public class JQueryFirstAssignmentTest {
 
         // 15.Test for Slider
 
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Slider")).click();
+        //Move the handle slider
+        WebElement sliderLink=driver.findElement(By.linkText("Slider"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                sliderLink);
+        sliderLink.click();
+        sleep(1);
         jse.executeScript("window.scrollBy(0,300)");
         WebElement sliderPage=driver.findElement(By.cssSelector("iframe[class='demo-frame']"));
         driver.switchTo().frame(sliderPage);
@@ -330,9 +445,17 @@ public class JQueryFirstAssignmentTest {
 
         // 16.Test for Spinner
 
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Spinner")).click();
+        //Use up/down arrows to select the desired value
+        WebElement spinnerLink=driver.findElement(By.linkText("Spinner"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                spinnerLink);
+        spinnerLink.click();
+        sleep(1);
         jse.executeScript("window.scrollBy(0,300)");
         WebElement spinnerPage=driver.findElement(By.cssSelector("iframe[class='demo-frame']"));
         driver.switchTo().frame(spinnerPage);
@@ -344,6 +467,7 @@ public class JQueryFirstAssignmentTest {
         WebElement toggleButton=driver.findElement(By.xpath("//button[text()='Toggle widget']"));
         toggleButton.click();
         sleep(1);
+        //Verification
         if(toggleButton.isEnabled())
             System.out.println("Test Passed");
         else
@@ -356,9 +480,16 @@ public class JQueryFirstAssignmentTest {
 
         // 17.Test for Tabs
 
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Tabs")).click();
+        //Content separate by tabs
+        WebElement tabsLink=driver.findElement(By.linkText("Tabs"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                tabsLink);
+        tabsLink.click();
         jse.executeScript("window.scrollBy(0,300)");
         WebElement tabsPage=driver.findElement(By.cssSelector("iframe[class='demo-frame']"));
         driver.switchTo().frame(tabsPage);
@@ -366,6 +497,7 @@ public class JQueryFirstAssignmentTest {
         WebElement content=driver.findElement(By.xpath("//a[text()='Proin dolor']"));
         content.click();
         sleep(1);
+        //Verification
         if(content.isDisplayed())
             System.out.println("Content displayed and Test Passed");
         else
@@ -373,16 +505,24 @@ public class JQueryFirstAssignmentTest {
 
 
         // 18.Test for Tooltip
-
+        //Initialize the browser
         driver.get("https://jqueryui.com/");
         sleep(1);
-        driver.findElement(By.linkText("Tooltip")).click();
+        //Using customizable tooltip
+        WebElement tooltipLink=driver.findElement(By.linkText("Tooltip"));
+        jse.executeScript("window.scrollBy(0,300)");
+        sleep(1);
+        jse.executeScript("arguments[0].setAttribute('style', 'background: blue; border: 3px solid blue;');",
+                tooltipLink);
+        tooltipLink.click();
+        sleep(1);
         jse.executeScript("window.scrollBy(0,300)");
         WebElement tooltipPage=driver.findElement(By.cssSelector("iframe[class='demo-frame']"));
         driver.switchTo().frame(tooltipPage);
         WebElement ageTextBox=driver.findElement(By.id("age"));
         ageTextBox.click();
         sleep(2);
+        //Verification
         if(ageTextBox.isDisplayed())
             System.out.println("Test Passed");
         else
