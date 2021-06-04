@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Default Suite]">
+  <test thread-count="5" name="FirstAssignment(failed)">
+    <classes>
+      <class name="com.jQueryTest.JQueryWithTestNG">
+        <methods>
+          <include name="selectMultipleObject"/>
+          <include name="tabs"/>
+          <include name="datePicker"/>
+          <include name="sortable"/>
+          <include name="toolTip"/>
+          <include name="tearDown"/>
+          <include name="autoComplete"/>
+          <include name="accordion"/>
+          <include name="resizable"/>
+          <include name="slider"/>
+          <include name="selectSingleObject"/>
+          <include name="setup"/>
+          <include name="spinner"/>
+          <include name="draggableTest"/>
+          <include name="button"/>
+          <include name="dialog"/>
+          <include name="checkBoxRadio"/>
+          <include name="controlGroup"/>
+          <include name="menu"/>
+          <include name="selectMenu"/>
+          <include name="droppbale"/>
+        </methods>
+      </class> <!-- com.jQueryTest.JQueryWithTestNG -->
+    </classes>
+  </test> <!-- FirstAssignment(failed) -->
+</suite> <!-- Failed suite [Default Suite] -->
